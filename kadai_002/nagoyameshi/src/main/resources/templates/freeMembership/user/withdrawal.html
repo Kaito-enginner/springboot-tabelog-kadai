@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>退会</title>
+	</head>
+	
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							
+							<h1 class="text-center pt-4 pb-4">退会ページ</h1>
+							
+							<h2 class="pb-4 text-center text-danger">
+								一度退会してしまうと、<br>登録された情報は完全に削除されてしまいます!!<br>
+							</h2>
+							
+							<form method="post" th:action="@{/user/__${userId}__/disable}">								
+								<div class="form-group d-flex justify-content-center my-4">
+									<button  class="btn text-white text-shadow-sm nagoyameshi-btn btn-lg">
+										退会する
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<!-- フッター -->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

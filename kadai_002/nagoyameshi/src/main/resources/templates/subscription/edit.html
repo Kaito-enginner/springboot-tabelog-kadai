@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>クレジット情報更新</title>
+		
+	</head>
+	
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-4 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col">
+							<h1 class="text-center mb-4 pb-4">クレジット情報更新</h1>
+							
+							<h5 class="text-center mb-4">
+								下記ボタンをクリックするとクレジット情報入力フォームが表示されます。<br>
+								クレジット情報を入力して保存することでクレジット情報を更新することが出来ます。
+							</h4>
+							
+							<div class="d-flex justify-content-center">
+								<button id="paymentButton" class="btn text-white shadow-sm nagoyameshi-btn btn-lg">クレジット情報を更新する</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<!-- フッター -->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		
+		<div th:replace="~{fragment :: scripts}"></div>
+		<script src="https://js.stripe.com/v3/"></script>
+		<script th:inline="javascript">
+		    const sessionId = /*[[${sessionId}]]*/"sessionId";                
+		</script>        
+		<script th:src="@{/js/stripe.js}"></script>   
+		
+	</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>レビュー一覧</title>
+	</head>
+	
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col-xxl-7 col-xl-8 col-lg-9">
+							<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+							  	<ol class="breadcrumb">
+									<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+							    	<li class="breadcrumb-item"><a th:href="@{/stores}">店舗一覧</a></li>
+									<li class="breadcrumb-item"><a th:href="@{/stores/__${store.getId()}__}">店舗詳細</a></li>
+							    	<li class="breadcrumb-item active" aria-current="page">レビュー一覧</li>
+							  	</ol>
+							</nav>
+							
+							<h1 class="text-center pt-4 pb-4" th:text="${store.getName() + 'のレビュー一覧'}"></h1>
+							
+							<div class="d-flex justify-content-center">
+								<button th:if="${reviewbool == null}" sec:authorize="isAuthenticated()" class="btn shadow-sm mb-3 w-50 nagoyameshi-btn btn-lg">
+									<a th:href="@{/premium/review/__${store.getId()}__/register}" class="text-white text-decoration-none">レビューを投稿する</a>
+								</button>
+							</div>
+							
+							<div th:if="${successMessage}" class="alert alert-info">
+								<span th:text="${successMessage}"></span>
+							</div>
+							
+							<div th:each="review : ${reviewPage}">
+								<div class="card mb-3">
+								 	<div class="card-header fw-bold" th:text="${review.getUser().getName()}"></div>
+								 	<div class="card-body">
+										<div class="row">
+											<div class="col-8">
+												<h5 class="card-title text-warning" th:if="${review.getEvaluation() == 1}">&#9733;&#9734;&#9734;&#9734;&#9734;</h5>
+												<h5 class="card-title text-warning" th:if="${review.getEvaluation() == 2}">&#9733;&#9733;&#9734;&#9734;&#9734;</h5>
+												<h5 class="card-title text-warning" th:if="${review.getEvaluation() == 3}">&#9733;&#9733;&#9733;&#9734;&#9734;</h5>
+												<h5 class="card-title text-warning" th:if="${review.getEvaluation() == 4}">&#9733;&#9733;&#9733;&#9733;&#9734;</h5>
+												<h5 class="card-title text-warning" th:if="${review.getEvaluation() == 5}">&#9733;&#9733;&#9733;&#9733;&#9733;</h5>
+											</div>
+											<div class="col-4">
+												<p th:if="${user != null}" class="text-end">
+													<a th:if="${review.getUser().getId() == user.getId()}" th:href="@{/premium/review/__${store.getId()}__/__${review.getId()}__/edit}" class="text-decoration-none">編集</a>
+													<a data-bs-toggle="modal" data-bs-target="#deleteModal" th:if="${review.getUser().getId() == user.getId()}" class="text-danger text-decoration-none">削除</a>
+													
+													<!--削除用モーダル-->
+													<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+													  	<div class="modal-dialog">
+													    	<div class="modal-content">
+													      		<div class="modal-header">
+													        		<h1 class="modal-title fs-5" id="deleteModalLabel">本当にこのレビューを削除しますか？</h1>
+													        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+													      		</div>
+													      		<div class="modal-footer">
+																	<form method="post" th:action="@{/premium/review/__${store.getId()}__/__${review.getId()}__/delete}">
+																		<button type="submit" class="btn btn-danger">削除</button>
+																	</form>
+													      		</div>
+													    	</div>	
+													  	</div>
+													</div>
+												</p>
+											</div>
+										</div>
+								    	<p class="card-text" th:text="${review.getComment()}"></p>
+										<p class="card-text" th:if="${review.getUpdatedAt()}" th:text="${#temporals.format(review.getUpdatedAt().toLocalDateTime(), 'yyyy年MM月dd日')}"><small class="text-body-secondary"></small></p>
+										<p class="card-text" th:unless="${review.getUpdatedAt()}" th:text="${#temporals.format(review.getCreatedAt().toLocalDateTime(), 'yyyy年MM月dd日')}"><small class="text-body-secondary"></small></p>
+									</div>
+								</div>
+							</div>
+							
+							<!--ページネーション-->
+							<div th:if="${reviewPage.getTotalPages() > 1}" class="d-flex justify-content-center pt-4">
+								<nav aria-label="店舗一覧ページ">
+									<ul class="pagination">
+										<li class="page-item">
+											<span th:if="${reviewPage.isFirst()}" class="page-link disabled">前</span>
+											<a th:unless="${reviewPage.isFirst()}" th:href="@{/review/__${store.getId()}__(page = ${reviewPage.getNumber() - 1})}" class="page-link nagoyameshi-page-link">前</a>
+										</li>
+	
+										<li th:each="i : ${#numbers.sequence(0, reviewPage.getTotalPages() - 1)}" class="page-item">
+											<span th:if="${i == reviewPage.getNumber()}" class="page-link active nagoyameshi-active" th:text="${i + 1}"></span>
+											<a th:unless="${i == reviewPage.getNumber()}" th:href="@{/review/__${store.getId()}__(page = ${i})}" class="page-link nagoyameshi-page-link" th:text="${i + 1}"></a>
+										</li>
+	
+										<li class="page-item">
+											<span th:if="${reviewPage.isLast()}" class="page-link disabled">次</span>
+											<a th:unless="${reviewPage.isLast()}" th:href="@{/review/__${store.getId()}__(page = ${reviewPage.getNumber() + 1})}" class="page-link nagoyameshi-page-link">次</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<!-- フッター -->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

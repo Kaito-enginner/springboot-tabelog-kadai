@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>有料会員解約</title>
+	</head>
+	
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg-11">
+							
+							<h1 class="text-center pt-4 pb-4">有料会員解約</h1>
+							
+							<h5 class="pb-4 text-center">有料会員を解約すると下記のような特典を受け取ることが出来なくなります。</h5>
+							
+							<table class="fs-5 text table table-striped">
+								<thead>
+									<tr>
+										<th>機能</th>
+										<th>説明</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<th>予約機能</th>
+										<td>日時と人数を指定することで店舗を予約をすることが出来ます。</td>
+									</tr>
+									<tr>
+										<th>レビュー投稿機能</th>
+										<td>気に入った店舗にレビューを投稿できます。</td>
+									</tr>
+									<tr>
+										<th>お気に入り機能</th>
+										<td>気になった店舗をお気に入り登録することでいつでもお気に入りページより閲覧できます。</td>
+									</tr>
+								</tbody>
+							</table>
+							
+							<form method="post" th:action="@{/premium/delete}">
+								<input type="hidden" name="subscriptionId" th:value="${user.getSubscriptionId()}">
+								<input type="hidden" name="userId" th:value="${user.getId()}">
+								
+								<div class="form-group d-flex justify-content-center my-4">
+									<button type="submit"  class="btn text-white text-shadow-sm nagoyameshi-btn btn-lg">
+										有料会員をキャンセルする
+									</button>
+								</div>
+							</form>
+							
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<!-- フッター -->
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+   <head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>予約一覧</title>
+   </head>
+   <body>
+		<div class="nagoyameshi-wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col-xxl-7 col-xl-8 col-lg-9">
+							
+							<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mt-3">
+							  	<ol class="breadcrumb">
+							    	<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+							    	<li class="breadcrumb-item active" aria-current="page">予約一覧</l>
+							  	</ol>
+							</nav>
+							
+							<h1 class="text-center mb-4">予約一覧</h1>
+							
+							<div th:if="${successMessage}" class="alert alert-info">
+								<span th:text="${successMessage}"></span>
+							</div>
+							
+							<div th:each="reservation : ${reservationPage}">
+								<div class="card mb-3">
+								  	<div class="row g-0">
+								    	<div class="col-md-4">
+											<img th:if="${reservation.getStore().getImageName()}" th:src="@{/images/storeImages/__${reservation.getStore().getImageName()}__}" class="h-100 rounded-start" alt="店舗画像">
+											<img th:unless="${reservation.getStore().getImageName()}" th:src="@{/images/noImage.png}" class="img-fluid rounded-start">
+								    	</div>
+								    	<div class="col-md-8">
+											<div class="card-header bg-transparent" th:text="${reservation.getStore().getName()}"></div>
+								      		<div class="card-body">
+												<div class="d-flex justify-content-end">
+													<a data-bs-toggle="modal" th:data-bs-target="${'#deleteModal' + reservation.getId()}"class="text-danger text-decoration-none">キャンセル</a>
+												</div>
+												
+												<p class="card-text" th:text="${reservation.getStore().getDescription()}"></p>
+												
+								        		<p class="card-text">
+													<small class="text-secondary" th:text="${reservation.getStore().getAddress()}"></small>
+												</p>
+												<p class="card-text mb-0" th:text="${'ご予約日時：' + #temporals.format(reservation.getReservationDate(), 'yyyy年MM月dd日') + #temporals.format(reservation.getReservationTime(), 'HH時mm分')}"></p>
+												<p class="card-text" th:text="${'ご予約人数：' + reservation.getNumberOfPeople()}"></p>
+												
+												
+												<!--削除用モーダル-->
+												<div class="modal fade" th:id="${'deleteModal' + reservation.getId()}" tabindex="-1" aria-labelledby="deleteModalLabel">
+												  	<div class="modal-dialog">
+												    	<div class="modal-content">
+												      		<div class="modal-header">
+												        		<h1 class="modal-title fs-5" id="deleteModalLabel">本当にこの予約をキャンセルしますか？</h1>
+												        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+												      		</div>
+												      		<div class="modal-footer">
+																<form method="post" th:action="@{/premium/reservation/__${reservation.getId()}__/delete}">
+																	<button type="submit" class="btn btn-danger">キャンセル</button>
+																</form>
+												      		</div>
+												    	</div>	
+												  	</div>
+												</div>
+								      		</div>
+								    	</div>
+								  	</div>
+								</div>
+							</div>
+							
+							
+							<!-- ページネーション -->
+							<div th:if="${reservationPage.getTotalPages() > 1}" class="d-flex justify-content-center">
+							    <nav aria-label="民宿一覧ページ">
+							        <ul class="pagination">
+							            <li class="page-item">
+							                <span th:if="${reservationPage.isFirst()}" class="page-link disabled">前</span>
+							                <a th:unless="${reservationPage.isFirst()}" th:href="@{/premium/reservation(page = ${reservationPage.getNumber() - 1})}" class="page-link nagoyameshi-page-link">前</a>
+							            </li>
+							            <li th:each="i : ${#numbers.sequence(0, reservationPage.getTotalPages() - 1)}" class="page-item">
+							                <span th:if="${i == reservationPage.getNumber()}" class="page-link active nagoyameshi-active" th:text="${i + 1}"></span>
+							                <a th:unless="${i == reservationPage.getNumber()}" th:href="@{/premium/reservation(page = ${i})}" class="page-link nagoyameshi-page-link" th:text="${i + 1}"></a>
+							            </li>
+							            <li class="page-item">                        
+							                <span th:if="${reservationPage.isLast()}" class="page-link disabled">次</span>
+							                <a th:unless="${reservationPage.isLast()}" th:href="@{/premium/reservation(page = ${reservationPage.getNumber() + 1})}" class="page-link nagoyameshi-page-link">次</a>
+							            </li>
+							        </ul>
+							    </nav> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+   </body>
+</html>

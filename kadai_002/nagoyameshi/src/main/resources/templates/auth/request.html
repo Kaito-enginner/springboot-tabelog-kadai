@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>パスワード再設定</title>
+	</head>
+	
+	<body>
+		<div class="nagoyameshi-wrapper">
+			<!-- ヘッダー -->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-5 samuraitravel-container">
+					<div class="row justify-content-center">
+						<div class="col-xl-3 col-lg-4 col-md-5 col-sm-7">
+							
+							<div th:if="${errorMessage}" class="alert alert-danger">
+								<span th:text="${errorMessage}"></span>
+							</div>
+							
+							<div class="alert alert-success">
+								<span class="text-danger">
+									アカウントに登録されたメールアドレスにパスワード再設定用のURLを送信します。<br>
+									メールアドレスを入力して、送信ボタンをクリックしてください。
+								</span>
+							</div>
+							<form method="post" th:action="@{/request}">
+								<div class="form-group mb-3">
+									<input type="email" name="email" class="form-control" placeholder="メールアドレス">
+								</div>
+								<div>
+									<button type="submit" class="btn text-white shadow-sm w-100 nagoyameshi-btn">送信</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

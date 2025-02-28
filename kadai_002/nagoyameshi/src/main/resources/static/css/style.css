@@ -1,0 +1,222 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+JP');
+
+html {
+ font-size: 16px;
+}
+body {
+ font-family: 'Noto Sans JP', sans-serif;  
+}
+
+img{
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+	list-style: none;
+}
+
+.nagoyameshi-wrapper {
+ min-height: 100vh;
+ position: relative;
+ padding-bottom: 60px;
+ box-sizing: border-box;
+}
+
+.nagoyameshi-navbar {
+ min-height: 60px;
+}
+
+footer {
+ width: 100%;
+ height: 60px;
+ position: absolute;
+ bottom: 0;    
+ background-color: forestgreen;
+}
+
+.nagoyameshi-logo {
+	height: 50px;
+}
+
+.nagoyameshi-btn {
+	background-color: forestgreen;
+	border-color: forestgreen;
+	border-width: medium;
+}
+
+.nagoyameshi-btn-white {
+	color: forestgreen;
+	font-weight: bold;
+	border-color: forestgreen;
+	border-width: medium;
+}
+
+.nagoyameshi-btn:hover {
+	background-color: limegreen;
+}
+
+.nagoyameshi-btn-white:hover {
+	color:limegreen;
+	font-weight: bold;
+	border-color:limegreen;
+	border-width: medium;
+}
+
+.nagoyameshi-page-link {
+	color: forestgreen;
+}
+
+.nagoyameshi-page-link:hover {
+	color: limegreen;
+}
+
+.nagoyameshi-dropdown-item:hover {
+	background-color:lightgrey;
+}
+
+
+.nagoyameshi-active {
+	background-color: forestgreen !important;
+	border-color: forestgreen !important;
+}
+
+.img-frame{
+ position: relative;
+ width: 100%;
+ height: 800px;
+ overflow: hidden;
+}
+
+.img-01, .img-02, .img-03{
+ position: absolute;
+ top:0;
+ left:0;
+ width: 100%;
+ height: auto;
+ background-size: cover;
+ background-repeat: no-repeat;
+}
+
+.img-01{
+ animation: slide-animation-01 24s infinite;
+}
+
+.img-02{
+ animation: slide-animation-02 24s infinite;
+}
+
+.img-03{
+ animation: slide-animation-03 24s infinite;
+}
+
+@keyframes slide-animation-01 {
+ 0% {opacity: 1; transform: scale(1.0);}
+ 30% {opacity: 1;}
+ 40% {opacity: 0; transform: scale(1.15);}
+ 90% {opacity: 0}
+100% {opacity: 1; transform: scale(1.0);}
+}
+
+@keyframes slide-animation-02 {
+ 0% {opacity: 0;}
+ 30% {opacity: 0; transform: scale(1.1);}
+ 40% {opacity: 1;}
+ 60% {opacity: 1;}
+ 70% {opacity: 0; transform: scale(1.0);}
+100% {opacity: 0;}
+}
+
+@keyframes slide-animation-03 {
+ 0% {opacity: 0;}
+ 60% {opacity: 0; transform: scale(1.0);}
+ 70% {opacity: 1;}
+ 90% {opacity: 1;}
+100% {opacity: 0; transform: scale(1.1);}
+}
+
+.msg {
+ font-size: 60px;
+ font-family: 'Noto Serif JP', sans-serif;
+ font-weight: 700;
+ color: #fff;
+ position: absolute;
+ top: 40%;
+ left: 40%;
+ transform: translate(-50% , -50%);
+ text-shadow: 2px 2px 3px #000, -1px -1px 3px #000;
+}
+
+@media screen and (max-width:1200px) { 
+	.img-frame{
+	 position: relative;
+	 width: 100%;
+	 height: 600px;
+	 overflow: hidden;
+	}
+}
+
+@media screen and (max-width:992px) { 
+	.img-frame{
+	 position: relative;
+	 width: 100%;
+	 height: 500px;
+	 overflow: hidden;
+	}
+	
+
+	.msg {
+		 font-size: 55px;
+		 font-family: 'Noto Serif JP', sans-serif;
+		 font-weight: 700;
+		 color: #fff;
+		 position: absolute;
+		 top: 50%;
+		 left: 40%;
+		 transform: translate(-50% , -50%);
+		 text-shadow: 2px 2px 3px #000, -1px -1px 3px #000;
+		}
+}
+
+@media screen and (max-width:768px) { 
+	.img-frame{
+	 position: relative;
+	 width: 100%;
+	 height: 400px;
+	 overflow: hidden;
+	}
+	
+	.msg {
+		 font-size: 40px;
+		 font-family: 'Noto Serif JP', sans-serif;
+		 font-weight: 700;
+		 color: #fff;
+		 position: absolute;
+		 top: 50%;
+		 left: 40%;
+		 transform: translate(-50% , -50%);
+		 text-shadow: 2px 2px 3px #000, -1px -1px 3px #000;
+		}
+}
+
+
+@media screen and (max-width:480px) { 
+	.msg {
+	 font-size: 30px;
+	 font-family: 'Noto Serif JP', sans-serif;
+	 font-weight: 700;
+	 color: #fff;
+	 position: absolute;
+	 top: 50%;
+	 left: 40%;
+	 transform: translate(-50% , -50%);
+	 text-shadow: 2px 2px 3px #000, -1px -1px 3px #000;
+	}
+	
+	.img-frame{
+		 position: relative;
+		 width: 100%;
+		 height: 300px;
+		 overflow: hidden;
+		}
+}

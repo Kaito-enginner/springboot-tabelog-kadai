@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+   <head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>お気に入り一覧</title>
+   </head>
+   <body>
+		<div class="nagoyameshi-wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col-xxl-7 col-xl-8 col-lg-9">
+							
+							<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mt-3">
+							  	<ol class="breadcrumb">
+							    	<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+							    	<li class="breadcrumb-item active" aria-current="page">お気に入り一覧</l>
+							  	</ol>
+							</nav>
+							
+							<h1 class="text-center mb-4">お気に入り一覧</h1>
+							
+							<div th:if="${successMessage}" class="alert alert-info">
+								<span th:text="${successMessage}"></span>
+							</div>
+							
+							<div th:each="favorite : ${favoritePage}">
+								<a th:href="@{/stores/__${favorite.getStore().getId()}__}" class="text-dark text-decoration-none">
+									<div class="card mb-3">
+									  	<div class="row g-0">
+									    	<div class="col-md-4">
+												<img th:if="${favorite.getStore().getImageName()}" th:src="@{/images/storeImages/__${favorite.getStore().getImageName()}__}" class="h-100 rounded-start" alt="店舗画像">
+												<img th:unless="${favorite.getStore().getImageName()}" th:src="@{/images/noImage.png}" class="h-100 rounded-start">
+									    	</div>
+									    	<div class="col-md-8">
+												<div class="card-header bg-transparent" th:text="${favorite.getStore().getName()}"></div>
+									      		<div class="card-body">
+									        		<p class="card-text" th:text="${favorite.getStore().getDescription()}"></p>
+													<p class="card-text" th:text="${favorite.getStore().getPrice()} + '円'"></p>
+									        		<p class="card-text">
+														<small class="text-secondary" th:text="${favorite.getStore().getAddress()}"></small>
+													</p>
+									      		</div>
+									    	</div>
+									  	</div>
+									</div>
+								</a>
+							</div>
+
+							<!-- ページネーション -->
+							<div th:if="${favoritePage.getTotalPages() > 1}" class="d-flex justify-content-center">
+							    <nav aria-label="お気に入り一覧ページ">
+							        <ul class="pagination">
+							            <li class="page-item">
+							                <span th:if="${favoritePage.isFirst()}" class="page-link disabled">前</span>
+							                <a th:unless="${favoritePage.isFirst()}" th:href="@{/favorite(page = ${favoritePage.getNumber() - 1})}" class="page-link nagoyameshi-page-link">前</a>
+							            </li>
+							            <li th:each="i : ${#numbers.sequence(0, favoritePage.getTotalPages() - 1)}" class="page-item">
+							                <span th:if="${i == favoritePage.getNumber()}" class="page-link active nagoyameshi-active" th:text="${i + 1}"></span>
+							                <a th:unless="${i == favoritePage.getNumber()}" th:href="@{/favorite(page = ${i})}" class="page-link nagoyameshi-page-link" th:text="${i + 1}"></a>
+							            </li>
+							            <li class="page-item">                        
+							                <span th:if="${favoritePage.isLast()}" class="page-link disabled">次</span>
+							                <a th:unless="${favoritePage.isLast()}" th:href="@{/favorite(page = ${favoritePage.getNumber() + 1})}" class="page-link nagoyameshi-page-link">次</a>
+							            </li>
+							        </ul>
+							    </nav> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+   </body>
+</html>

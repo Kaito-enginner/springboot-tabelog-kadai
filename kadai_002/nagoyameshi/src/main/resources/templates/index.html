@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+   <head>
+		<div th:replace="~{fragment :: meta}"></div>
+		
+		<div th:replace="~{fragment :: styles}"></div>
+		
+		<title>NAGOYAMESHIホーム</title>
+   </head>
+   <body>
+		<div class="nagoyameshi-wrapper">
+			
+			<!--ヘッダー-->
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pb-5 nagoyameshi-container">
+					<div class="row justify-content-center">
+						<div class="col">
+							<div th:if="${successMessage}" class="alert alert-info">
+								<span th:text="${successMessage}"></span>
+							</div>
+
+							<div th:if="${failedMessage}" class="alert alert-danger">
+								<span th:text="${failedMessage}"></span>
+							</div>
+
+							<div th:if="${param.loggedIn}" class="alert alert-info">
+								ログインしました。
+							</div>
+
+							<div th:if="${param.loggedOut}" class="alert alert-info">
+								ログアウトしました。
+							</div>
+
+							 <div th:if="${param.successfulContract}" class="alert alert-info">
+							    有料会員にアップグレードしました。<br>
+								ログアウトした後、再度ログインしてアップグレードを確認して下さい。
+							</div>
+
+							 <div th:if="${param.successfulChange}" class="alert alert-info">
+							    クレジット情報を更新しました。
+							</div>
+							
+							<div class="img-frame pb-4 mb-4">
+							   <div class="img-01"><p class="msg msg-01">ようこそ、<br>NAGOYAMESHIへ。</p><img th:src="@{/images/slide/slide01.jpg}"></div>
+							   <div class="img-02"><p class="msg msg-02">名古屋の誇る、B級グルメを<br>是非ご賞味ください。</p><img th:src="@{/images/slide/slide02.jpg}"></div>
+							   <div class="img-03"><img th:src="@{/images/slide/slide03.jpg}"></div>    
+							</div>
+							
+							<h2 class="pb-2">キーワードから探す</h2>
+							
+							<form method="get" th:action="@{/stores}" class="pb-4 mb-4">
+								<div class="input-group w-50">
+									<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="店舗名">
+									<button type="submit" class="btn text-white shadow-sm  nagoyameshi-btn">検索</button>
+								</div>
+							</form>
+							
+							<div class="row pb-4 mb-4">
+								<div class="col">
+									<h2 class="pb-2">カテゴリで絞り込む</h2>
+									<div class="d-flex flex-wrap">
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=1}">和食</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=2}">日本料理</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=3}">中華料理</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=4}">イタリアン</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=5}">韓国料理</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=6}">ラーメン</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=7}">そば</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=8}">うどん</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=9}">パスタ</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=10}">焼肉</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=11}">寿司</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=12}">カレー</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=13}">しゃぶしゃぶ</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=14}">焼き鳥</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=15}">海鮮・魚介</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=16}">みそカツ</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?category=17}">きしめん</a></div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col">
+									<h2 class="pb-2">金額で絞り込む</h2>
+									<div class="d-flex flex-wrap">
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=1000}">～1000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=2000}">～2000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=3000}">～3000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=4000}">～4000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=5000}">～5000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=6000}">～6000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=7000}">～7000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=8000}">～8000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=9000}">～9000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=10000}">～10000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=10000}">～15000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=20000}">～20000円</a></div>
+										<div class="border m-1"><a class=" p-2 text-black-50 text-decoration-none" th:href="@{/stores?price=30000}">～30000円</a></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		<div th:replace="~{fragment :: scripts}"></div>
+   </body>
+</html>
