@@ -35,7 +35,7 @@ public class SignupEventListener {
 		mailMessage.setTo(recipientAdress);
 		mailMessage.setSubject(subject);
 		mailMessage.setText(message + "\n" + confirmationUrl);
-		mailMessage.setFrom("kaito2001726@gmail.com");
+		mailMessage.setFrom("");
 		javaMailSender.send(mailMessage);
 	}
 }
