@@ -94,8 +94,9 @@
 									</div>
 								</div>
 								<div class="col-9">
-									
-									<div class="d-flex justify-content-end">
+									<div class="d-flex justify-content-between ">
+										<p th:text="${'検索結果：' + storePage.getTotalElements() + '件'}"></p> 
+										
 										<form method="get" th:action="@{/stores}" class="mb-3 samuraitravel-sort-box"> 
 										    <input th:if="${category}" type="hidden" name="category" th:value="${category}">
 										    <input th:if="${price}" type="hidden" name="price" th:value="${price}">                                      

@@ -38,7 +38,6 @@ public class StoreRegisterForm {
 	@NotBlank(message = "住所を入力してください。")
 	private String address;
 	
-	
 	@NotBlank(message = "電話番号を入力してください。")
 	private String phoneNumber;
 
